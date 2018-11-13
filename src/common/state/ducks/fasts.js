@@ -1,4 +1,4 @@
-import { LocalDateTime, ZoneOffset, ChronoUnit } from 'js-joda';
+import { LocalDateTime, ZoneOffset } from 'js-joda';
 import { createTransform } from 'redux-persist';
 import { REHYDRATE } from 'redux-persist';
 import { calculateDuration } from 'common/date';
@@ -6,7 +6,8 @@ import { calculateDuration } from 'common/date';
 export const ADD_FAST = 'app/fasts/ADD_FAST';
 export const END_FAST = 'app/fasts/END_FAST';
 
-const initialState = {
+export const initialState = {
+  activeFastId: null,
   byId: {},
   allIds: [],
 };
@@ -65,19 +66,6 @@ export function beginFast() {
 export function endFast() {
   return { type: END_FAST };
 }
-
-// Selectors
-
-export const getFasts = state =>
-  state.fasts.allIds.map(x => {
-    return state.fasts.byId[x];
-  });
-
-export const getFast = (state, id) => ({ ...state.fasts.byId[id] });
-
-export const getActiveFast = state => ({
-  ...state.fasts.byId[state.fasts.activeFastId],
-});
 
 // Persistence helpers
 
