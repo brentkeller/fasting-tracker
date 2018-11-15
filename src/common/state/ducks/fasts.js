@@ -1,6 +1,7 @@
+import cloneDeep from 'lodash.clonedeep';
 import { LocalDateTime, ZoneOffset } from 'js-joda';
 import { createTransform } from 'redux-persist';
-import { REHYDRATE } from 'redux-persist';
+//import { REHYDRATE } from 'redux-persist';
 import { calculateDuration } from 'common/date';
 
 export const ADD_FAST = 'app/fasts/ADD_FAST';
@@ -13,12 +14,12 @@ export const initialState = {
 };
 
 export default function fasts(state = initialState, action) {
+  const newState = cloneDeep(state);
   switch (action.type) {
     case ADD_FAST: {
-      const newState = { ...state };
       newState.byId[action.fast.id] = action.fast;
       newState.allIds.push(action.fast.id);
-      if (!action.fast.endDate) newState.activeFastId = action.fast.id;
+      if (!action.fast.end) newState.activeFastId = action.fast.id;
       return newState;
     }
 
@@ -29,10 +30,7 @@ export default function fasts(state = initialState, action) {
         end: LocalDateTime.now(ZoneOffset.UTC),
       };
       fast.duration = calculateDuration(fast.start, fast.end);
-      const newState = {
-        ...state,
-        activeFastId: null,
-      };
+      newState.activeFastId = null;
       newState.byId[fast.id] = fast;
       return newState;
     }
@@ -44,15 +42,13 @@ export default function fasts(state = initialState, action) {
     // }
 
     default:
-      return state;
+      return newState;
   }
 }
 
 // Action Creators
 
-export function addFast(fast) {
-  return { type: ADD_FAST, fast };
-}
+export const addFast = fast => ({ type: ADD_FAST, fast });
 
 export function beginFast() {
   const now = LocalDateTime.now(ZoneOffset.UTC);
@@ -63,13 +59,11 @@ export function beginFast() {
   return addFast(fast);
 }
 
-export function endFast() {
-  return { type: END_FAST };
-}
+export const endFast = () => ({ type: END_FAST });
 
 // Persistence helpers
 
-function serializeFast(fast) {
+export function serializeFast(fast) {
   return {
     ...fast,
     start: !fast.start ? null : fast.start.toEpochSecond(ZoneOffset.UTC),
@@ -77,7 +71,7 @@ function serializeFast(fast) {
   };
 }
 
-function deserializeFast(fast) {
+export function deserializeFast(fast) {
   return {
     ...fast,
     start: !fast.start
