@@ -6,6 +6,7 @@ import { calculateDuration } from 'common/date';
 
 export const ADD_FAST = 'app/fasts/ADD_FAST';
 export const END_FAST = 'app/fasts/END_FAST';
+export const DELETE_FAST = 'app/fasts/DELETE_FAST';
 
 export const initialState = {
   activeFastId: null,
@@ -20,6 +21,13 @@ export default function fasts(state = initialState, action) {
       newState.byId[action.fast.id] = action.fast;
       newState.allIds.push(action.fast.id);
       if (!action.fast.end) newState.activeFastId = action.fast.id;
+      return newState;
+    }
+
+    case DELETE_FAST: {
+      delete newState.byId[action.id];
+      newState.allIds = newState.allIds.filter(x => x != action.id);
+      if (newState.activeFastId === action.id) newState.activeFastId = null;
       return newState;
     }
 
@@ -60,6 +68,8 @@ export function beginFast() {
 }
 
 export const endFast = () => ({ type: END_FAST });
+
+export const deleteFast = id => ({ type: DELETE_FAST, id });
 
 // Persistence helpers
 

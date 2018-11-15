@@ -2,17 +2,15 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  beginFast,
-  endFast,
-  getActiveFast,
-  getFasts,
-} from 'common/state/ducks/fasts';
+import { getActiveFast, getFasts } from 'common/state/selectors';
+import { beginFast, deleteFast, endFast } from 'common/state/ducks/fasts';
 import { getDisplayValue, getDurationFromNow } from 'common/date';
+import { ListView } from 'react-native';
 import {
   Container,
   Header,
   Content,
+  Button,
   View,
   Left,
   Body,
@@ -23,12 +21,25 @@ import {
   Text,
   Card,
   CardItem,
+  List,
+  ListItem,
 } from 'native-base';
 import FastListItem from './FastListItem';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    this.deleteRow = this.deleteRow.bind(this);
+    this.editRow = this.editRow.bind(this);
+  }
+
+  editRow(data) {
+    console.log('edit', data);
+  }
+
+  deleteRow(data) {
+    this.props.actions.deleteFast(data.id);
   }
 
   beginFast = () => {
@@ -50,6 +61,10 @@ class Main extends React.Component {
     const fabIconSet =
       activeFast && activeFast.start ? 'MaterialIcons' : 'MaterialIcons';
     const duration = activeFast ? getDurationFromNow(activeFast.start) : null;
+
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2,
+    });
 
     return (
       <Container>
@@ -74,7 +89,27 @@ class Main extends React.Component {
               </CardItem>
             </Card>
           )}
-          {items}
+          <List
+            leftOpenValue={75}
+            rightOpenValue={-75}
+            dataSource={ds.cloneWithRows(fasts)}
+            renderRow={data => (
+              <ListItem>
+                <Text> {data.id} </Text>
+              </ListItem>
+            )}
+            renderLeftHiddenRow={data => (
+              <Button full onPress={() => this.editRow(data)}>
+                <Icon active name="edit" type="MaterialIcons" />
+              </Button>
+            )}
+            renderRightHiddenRow={data => (
+              <Button full danger onPress={() => this.deleteRow(data)}>
+                <Icon active name="trash" />
+              </Button>
+            )}
+          />
+          {/* {items} */}
           <Fab
             direction="up"
             containerStyle={{}}
@@ -104,7 +139,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ beginFast, endFast }, dispatch),
+    actions: bindActionCreators({ beginFast, deleteFast, endFast }, dispatch),
   };
 }
 

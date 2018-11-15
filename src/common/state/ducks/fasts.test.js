@@ -2,9 +2,11 @@ import reducer, {
   initialState,
   ADD_FAST,
   END_FAST,
+  DELETE_FAST,
   addFast,
   beginFast,
   endFast,
+  deleteFast,
   serializeFast,
   deserializeFast,
 } from './fasts';
@@ -36,6 +38,15 @@ describe('endFast', () => {
   test('returns action of type END_FAST', () => {
     const action = endFast();
     expect(action.type).toEqual(END_FAST);
+  });
+});
+
+describe('deleteFast', () => {
+  test('returns action of type DELETE_FAST', () => {
+    const id = 'abc';
+    const action = deleteFast(id);
+    expect(action.type).toEqual(DELETE_FAST);
+    expect(action.id).toEqual(id);
   });
 });
 
@@ -107,6 +118,39 @@ describe('fasts reducer', () => {
       const result = reducer(state, action);
       expect(result.byId[fast.id]).toEqual(fast);
       expect(result.allIds).toHaveLength(1);
+      expect(result.activeFastId).not.toBeNull();
+    });
+  });
+
+  describe('DELETE_FAST', () => {
+    test('should remove cached object from store', () => {
+      const state = helper.getPopulatedFasts();
+      const id = state.allIds[0];
+      const action = deleteFast(id);
+      const result = reducer(state, action);
+      expect(result.byId[id]).toBeUndefined();
+    });
+    test('should remove id from store array', () => {
+      const state = helper.getPopulatedFasts();
+      const id = state.allIds[0];
+      const action = deleteFast(id);
+      const result = reducer(state, action);
+      expect(result.allIds.some(x => x === id)).toEqual(false);
+    });
+    test('should unset active fast if it matches', () => {
+      const state = helper.getPopulatedFasts();
+      const id = state.allIds[0];
+      state.activeFastId = id;
+      const action = deleteFast(id);
+      const result = reducer(state, action);
+      expect(result.activeFastId).toBeNull();
+    });
+    test('should not unset active fast if it does not match', () => {
+      const state = helper.getPopulatedFasts();
+      const id = state.allIds[0];
+      state.activeFastId = state.allIds[1];
+      const action = deleteFast(id);
+      const result = reducer(state, action);
       expect(result.activeFastId).not.toBeNull();
     });
   });
