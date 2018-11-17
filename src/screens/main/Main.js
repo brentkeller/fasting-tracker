@@ -22,7 +22,6 @@ import {
   Card,
   CardItem,
   List,
-  ListItem,
 } from 'native-base';
 import FastListItem from './FastListItem';
 
@@ -93,11 +92,7 @@ class Main extends React.Component {
             leftOpenValue={75}
             rightOpenValue={-75}
             dataSource={ds.cloneWithRows(fasts)}
-            renderRow={data => (
-              <ListItem>
-                <Text> {data.id} </Text>
-              </ListItem>
-            )}
+            renderRow={data => <FastListItem fast={data} />}
             renderLeftHiddenRow={data => (
               <Button full onPress={() => this.editRow(data)}>
                 <Icon active name="edit" type="MaterialIcons" />
