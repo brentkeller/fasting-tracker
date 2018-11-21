@@ -21,7 +21,12 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.brentkeller.fastingtracker",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.brentkeller.fastingtracker",
+      "permissions": []
     }
   }
 }
