@@ -96,29 +96,21 @@ export function deserializeFast(fast) {
 export const fastTransform = createTransform(
   // transform state on its way to being serialized and persisted.
   (inboundState, stateKey) => {
-    const byId = { ...inboundState.byId };
-    for (var key in byId) {
-      if (!byId.hasOwnProperty(key)) continue;
-      byId[key] = serializeFast(byId[key]);
+    const newState = cloneDeep(inboundState);
+    for (var key in newState.byId) {
+      if (!newState.byId.hasOwnProperty(key)) continue;
+      newState.byId[key] = serializeFast(newState.byId[key]);
     }
-    const newState = {
-      ...inboundState,
-      byId,
-    };
     return newState;
   },
 
   // transform state being rehydrated
   (outboundState, stateKey) => {
-    const byId = { ...outboundState.byId };
-    for (var key in byId) {
-      if (!byId.hasOwnProperty(key)) continue;
-      byId[key] = deserializeFast(byId[key]);
+    const newState = cloneDeep(outboundState);
+    for (var key in newState.byId) {
+      if (!newState.byId.hasOwnProperty(key)) continue;
+      newState.byId[key] = deserializeFast(newState.byId[key]);
     }
-    const newState = {
-      ...outboundState,
-      byId,
-    };
     return newState;
   },
 
