@@ -10,14 +10,15 @@ export const DELETE_FAST = 'app/fasts/DELETE_FAST';
 
 export const initialState = {
   activeFastId: null,
+  editFast: null,
   byId: {},
   allIds: [],
 };
 
 export default function fasts(state = initialState, action) {
-  const newState = cloneDeep(state);
   switch (action.type) {
     case ADD_FAST: {
+      const newState = cloneDeep(state);
       newState.byId[action.fast.id] = action.fast;
       newState.allIds.push(action.fast.id);
       if (!action.fast.end) newState.activeFastId = action.fast.id;
@@ -25,6 +26,7 @@ export default function fasts(state = initialState, action) {
     }
 
     case DELETE_FAST: {
+      const newState = cloneDeep(state);
       delete newState.byId[action.id];
       newState.allIds = newState.allIds.filter(x => x != action.id);
       if (newState.activeFastId === action.id) newState.activeFastId = null;
@@ -33,8 +35,9 @@ export default function fasts(state = initialState, action) {
 
     case END_FAST: {
       if (!state.activeFastId) return state;
+      const newState = cloneDeep(state);
       const fast = {
-        ...state.byId[state.activeFastId],
+        ...newState.byId[newState.activeFastId],
         end: LocalDateTime.now(ZoneOffset.UTC),
       };
       fast.duration = calculateDuration(fast.start, fast.end);
@@ -45,12 +48,13 @@ export default function fasts(state = initialState, action) {
 
     // For debugging redux-persist
     // case REHYDRATE: {
-    //   console.log('rehydrated fasts', action);
+    //   console.log('REHYDRATE action', action);
+    //   console.log('REHYDRATE state', state);
     //   return state;
     // }
 
     default:
-      return newState;
+      return state;
   }
 }
 

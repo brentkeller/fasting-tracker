@@ -8,6 +8,7 @@ import { fastTransform } from './ducks/fasts';
 const persistConfig = {
   key: 'root',
   storage: storage,
+  stateReconciler: autoMergeLevel2,
   transforms: [fastTransform],
 };
 

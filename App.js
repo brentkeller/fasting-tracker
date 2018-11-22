@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-//import  { AsyncStorage } from 'react-native';
+//import { AsyncStorage } from 'react-native';
 import { Provider as StoreProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistor, store } from './src/common/state/store';
 import Main from './src/screens/main/Main';
 
-// Debug storage on app load
+// // Debug storage on app load
 // AsyncStorage.getAllKeys((err, keys) => {
 //   AsyncStorage.multiGet(keys, (err, stores) => {
 //     stores.map((result, i, store) => {
