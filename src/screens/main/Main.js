@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getActiveFast, getFasts } from 'common/state/selectors';
 import { beginFast, deleteFast, endFast } from 'common/state/ducks/fasts';
-import { ListView } from 'react-native';
+import { ListView, Alert } from 'react-native';
 import {
   Container,
   Header,
@@ -35,7 +35,14 @@ class Main extends React.Component {
   }
 
   deleteRow(data) {
-    this.props.actions.deleteFast(data.id);
+    Alert.alert('Delete fast?', 'Do you want to delete this fast entry?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Ok',
+        onPress: () => this.props.actions.deleteFast(data.id),
+        style: 'destructive',
+      },
+    ]);
   }
 
   beginFast = () => {
