@@ -1,15 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getActiveFast, getFasts } from 'common/state/selectors';
 import { beginFast, deleteFast, endFast } from 'common/state/ducks/fasts';
-import { getDisplayValue, getDurationFromNow } from 'common/date';
 import { ListView } from 'react-native';
 import {
   Container,
   Header,
-  Content,
   Button,
   View,
   Left,
@@ -18,16 +16,15 @@ import {
   Title,
   Icon,
   Fab,
-  Text,
-  Card,
-  CardItem,
   List,
 } from 'native-base';
 import FastListItem from './FastListItem';
+import ActiveFastCard from './ActiveFastCard';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
+
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.deleteRow = this.deleteRow.bind(this);
     this.editRow = this.editRow.bind(this);
@@ -51,15 +48,11 @@ class Main extends React.Component {
 
   render() {
     const { activeFast, fasts } = this.props;
-    const items = fasts
-      .filter(x => x.end)
-      .map(x => <FastListItem key={x.id} fast={x} />);
     const fabAction =
       activeFast && activeFast.start ? this.endFast : this.beginFast;
     const fabIcon = activeFast && activeFast.start ? 'stop' : 'add';
     const fabIconSet =
       activeFast && activeFast.start ? 'MaterialIcons' : 'MaterialIcons';
-    const duration = activeFast ? getDurationFromNow(activeFast.start) : null;
 
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
@@ -75,19 +68,7 @@ class Main extends React.Component {
           <Right />
         </Header>
         <View style={{ flex: 1 }} padder>
-          {activeFast && activeFast.start && (
-            <Card>
-              <CardItem>
-                <Text>Active Fast</Text>
-              </CardItem>
-              <CardItem>
-                <Text>Began: {getDisplayValue(activeFast.start)}</Text>
-              </CardItem>
-              <CardItem>
-                <Text>Duration: {duration}</Text>
-              </CardItem>
-            </Card>
-          )}
+          <ActiveFastCard />
           <List
             leftOpenValue={75}
             rightOpenValue={-75}
@@ -104,7 +85,6 @@ class Main extends React.Component {
               </Button>
             )}
           />
-          {/* {items} */}
           <Fab
             direction="up"
             containerStyle={{}}
