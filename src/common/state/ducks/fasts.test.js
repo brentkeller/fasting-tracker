@@ -10,7 +10,6 @@ import reducer, {
   serializeFast,
   deserializeFast,
 } from './fasts';
-import { LocalDateTime, ZoneOffset } from 'js-joda';
 import * as helper from 'common/testHelper';
 
 function getState(state = initialState) {
@@ -54,7 +53,7 @@ describe('serializeFast', () => {
   test('should serialize null dates properly', () => {
     const fast = helper.createFast('abc');
     const result = serializeFast(fast);
-    const expected = { end: null, id: 'abc', start: null };
+    const expected = { duration: 0, end: null, id: 'abc', start: null };
     expect(result).toEqual(expected);
   });
   test('should serialize dates properly', () => {
@@ -64,6 +63,7 @@ describe('serializeFast', () => {
       helper.SAMPLE_END_STRING,
     );
     const expected = {
+      duration: 960,
       end: helper.SAMPLE_END_EPOCH,
       id: 'abc',
       start: helper.SAMPLE_START_EPOCH,
@@ -76,7 +76,7 @@ describe('serializeFast', () => {
 describe('deserializeFast', () => {
   test('should deserialize null dates properly', () => {
     const expected = helper.createFast('abc');
-    const dehydratedFast = { end: null, id: 'abc', start: null };
+    const dehydratedFast = { duration: 0, end: null, id: 'abc', start: null };
     const result = deserializeFast(dehydratedFast);
     expect(result).toEqual(expected);
   });
@@ -87,6 +87,7 @@ describe('deserializeFast', () => {
       helper.SAMPLE_END_STRING,
     );
     const fast = {
+      duration: 960,
       end: helper.SAMPLE_END_EPOCH,
       id: 'abc',
       start: helper.SAMPLE_START_EPOCH,

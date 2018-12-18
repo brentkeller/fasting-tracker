@@ -13,6 +13,7 @@ export const initialState = {
   editFast: null,
   byId: {},
   allIds: [],
+  stats: {},
 };
 
 export default function fasts(state = initialState, action) {

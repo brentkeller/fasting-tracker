@@ -1,5 +1,6 @@
 import { LocalDateTime, ZoneOffset } from 'js-joda';
 import { initialState } from './state/ducks/fasts';
+import { calculateDuration } from 'common/date';
 
 export const SAMPLE_START_STRING = '2018-11-01T20:00:00';
 export const SAMPLE_START_EPOCH = 1541102400;
@@ -7,13 +8,15 @@ export const SAMPLE_END_STRING = '2018-11-02T12:00:00';
 export const SAMPLE_END_EPOCH = 1541160000;
 
 export function createFast(id, start, end) {
-  return {
+  const fast = {
     id: id
       ? id
       : LocalDateTime.now(ZoneOffset.UTC).toEpochSecond(ZoneOffset.UTC),
     start: !start ? null : LocalDateTime.parse(start),
     end: !end ? null : LocalDateTime.parse(end),
   };
+  fast.duration = calculateDuration(fast.start, fast.end);
+  return fast;
 }
 
 export const buildState = fasts => ({
