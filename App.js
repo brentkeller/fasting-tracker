@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Provider as StoreProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistor, store } from './src/common/state/store';
-import Main from './src/screens/main/Main';
+import AppShell from './src/screens/AppShell';
 
 // // Debug storage on app load
 // AsyncStorage.getAllKeys((err, keys) => {
@@ -39,7 +39,7 @@ export default class App extends Component {
     return (
       <StoreProvider store={store}>
         <PersistGate persistor={persistor}>
-          <Main />
+          <AppShell />
         </PersistGate>
       </StoreProvider>
     );

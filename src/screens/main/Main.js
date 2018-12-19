@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getActiveFast, getFasts } from 'common/state/selectors';
 import { beginFast, deleteFast, endFast } from 'common/state/ducks/fasts';
-import { ListView, Alert } from 'react-native';
+import { ListView, Alert, Text } from 'react-native';
 import {
   Container,
   Header,
@@ -53,6 +53,10 @@ class Main extends React.Component {
     this.props.actions.endFast();
   };
 
+  goToStats = () => {
+    this.props.navigation.navigate('Stats');
+  };
+
   render() {
     const { activeFast, fasts } = this.props;
     const fabAction =
@@ -92,6 +96,9 @@ class Main extends React.Component {
               </Button>
             )}
           />
+          <Button onPress={() => this.goToStats()}>
+            <Text>Stats</Text>
+          </Button>
           <Fab
             direction="up"
             containerStyle={{}}

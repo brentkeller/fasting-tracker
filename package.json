@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test": "node node_modules/jest/bin/jest.js --coverage",
-    "test-watch": "node node_modules/jest/bin/jest.js --watchAll"
+    "test-watch": "node node_modules/jest/bin/jest.js --watch"
   },
   "jest": {
     "preset": "jest-expo"
@@ -22,6 +22,7 @@
     "native-base": "^2.8.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-navigation": "^3.0.8",
     "react-redux": "^5.1.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0"
