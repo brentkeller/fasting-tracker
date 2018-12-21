@@ -8,3 +8,5 @@ export const getActiveFast = state =>
   state.fasts.activeFastId in state.fasts.byId
     ? { ...state.fasts.byId[state.fasts.activeFastId] }
     : null;
+
+export const getFastStats = state => state.fasts.stats;

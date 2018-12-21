@@ -1,8 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getFasts } from 'common/state/selectors';
-import { Text } from 'react-native';
-import { Container, Header, View, Left, Body, Right, Title } from 'native-base';
+import StatsCard from './StatsCard';
+import {
+  Container,
+  Header,
+  View,
+  Left,
+  Body,
+  Right,
+  Title,
+  Button,
+  Icon,
+} from 'native-base';
 
 class Stats extends React.Component {
   constructor(props) {
@@ -14,14 +24,18 @@ class Stats extends React.Component {
     return (
       <Container>
         <Header>
-          <Left />
+          <Left>
+            <Button transparent>
+              <Icon name="menu" />
+            </Button>
+          </Left>
           <Body>
             <Title>Stats</Title>
           </Body>
           <Right />
         </Header>
         <View style={{ flex: 1 }} padder>
-          <Text>Stats page</Text>
+          <StatsCard />
         </View>
       </Container>
     );
