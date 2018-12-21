@@ -3,6 +3,7 @@ import { LocalDateTime, ZoneOffset } from 'js-joda';
 import { createTransform } from 'redux-persist';
 //import { REHYDRATE } from 'redux-persist';
 import { calculateDuration } from 'common/date';
+import calculateStats from './fastStatCalculator';
 
 export const ADD_FAST = 'app/fasts/ADD_FAST';
 export const END_FAST = 'app/fasts/END_FAST';
@@ -15,6 +16,8 @@ export const initialState = {
   allIds: [],
   stats: {},
 };
+
+const getFasts = fastState => fastState.allIds.map(x => fastState.byId[x]);
 
 export default function fasts(state = initialState, action) {
   switch (action.type) {
@@ -31,6 +34,7 @@ export default function fasts(state = initialState, action) {
       delete newState.byId[action.id];
       newState.allIds = newState.allIds.filter(x => x != action.id);
       if (newState.activeFastId === action.id) newState.activeFastId = null;
+      newState.stats = calculateStats(getFasts(newState));
       return newState;
     }
 
@@ -44,6 +48,7 @@ export default function fasts(state = initialState, action) {
       fast.duration = calculateDuration(fast.start, fast.end);
       newState.activeFastId = null;
       newState.byId[fast.id] = fast;
+      newState.stats = calculateStats(getFasts(newState));
       return newState;
     }
 

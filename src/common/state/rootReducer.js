@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import fasts from './ducks/fasts';
+import fasts from './fasts/fasts';
 
 const rootReducer = combineReducers({
   fasts,

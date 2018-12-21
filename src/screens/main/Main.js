@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getActiveFast, getFasts } from 'common/state/selectors';
-import { beginFast, deleteFast, endFast } from 'common/state/ducks/fasts';
+import { beginFast, deleteFast, endFast } from 'common/state/fasts/fasts';
 import { ListView, Alert, Text } from 'react-native';
 import {
   Container,

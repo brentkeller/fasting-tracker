@@ -1,5 +1,5 @@
 import { LocalDateTime, ZoneOffset } from 'js-joda';
-import { initialState } from './state/ducks/fasts';
+import { initialState } from './state/fasts/fasts';
 import { calculateDuration } from 'common/date';
 
 export const SAMPLE_START_STRING = '2018-11-01T20:00:00';

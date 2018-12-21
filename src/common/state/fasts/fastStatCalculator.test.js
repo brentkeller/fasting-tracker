@@ -1,5 +1,5 @@
 import calculateStats from './fastStatCalculator';
-import { getFasts } from './state/selectors';
+import { getFasts } from '../selectors';
 import * as helper from 'common/testHelper';
 
 let state = helper.getEmptyState();

@@ -1,3 +1,5 @@
+import { getDurationString } from '../../date';
+
 const calculateStats = fasts => {
   const result = {
     shortest: null,
