@@ -45,6 +45,10 @@ describe('getDurationString', () => {
   test('should return hours and minutes when duration is over 59 mins', () => {
     expect(date.getDurationString(60)).toEqual('1h 0m');
   });
+
+  test('should return whole hours and minutes when values are decimal', () => {
+    expect(date.getDurationString(60.442)).toEqual('1h 0m');
+  });
 });
 
 describe('getDisplayValue', () => {

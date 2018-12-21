@@ -15,8 +15,8 @@ export function getDurationFromNow(start) {
 
 export function getDurationString(duration) {
   if (!duration) return '';
-  const mins = duration % 60;
-  const hrs = (duration - mins) / 60;
+  const mins = Math.floor(duration % 60);
+  const hrs = Math.floor((duration - mins) / 60);
   if (hrs > 0) return `${hrs}h ${mins}m`;
   return `${mins}m`;
 }
