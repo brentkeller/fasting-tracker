@@ -72,7 +72,11 @@ class Main extends React.Component {
     return (
       <Container>
         <Header>
-          <Left />
+          <Left>
+            <Button transparent>
+              <Icon name="menu" />
+            </Button>
+          </Left>
           <Body>
             <Title>Fasting Tracker</Title>
           </Body>
@@ -96,9 +100,6 @@ class Main extends React.Component {
               </Button>
             )}
           />
-          <Button onPress={() => this.goToStats()}>
-            <Text>Stats</Text>
-          </Button>
           <Fab
             direction="up"
             containerStyle={{}}
