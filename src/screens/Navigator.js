@@ -1,4 +1,5 @@
-import Main from './main/Main';
+import Home from './home/Home';
+import History from './history/History';
 import Stats from './stats/Stats';
 
 import { Platform, ScrollView, StatusBar, Text } from 'react-native';
@@ -55,23 +56,15 @@ const DrawerNavigator = createDrawerNavigator(
   {
     Home: {
       path: 'Home',
-      screen: Main,
-      navigationOptions: {
-        drawerLabel: 'Home',
-        // drawerIcon: ({ tintColor }) => (
-        //   <MaterialIcons name="drafts" size={24} style={{ color: tintColor }} />
-        // ),
-      },
+      screen: Home,
+    },
+    History: {
+      path: 'History',
+      screen: History,
     },
     Stats: {
       path: 'Stats',
       screen: Stats,
-      navigationOptions: {
-        drawerLabel: 'Stats',
-        // drawerIcon: ({ tintColor }) => (
-        //   <MaterialIcons name="drafts" size={24} style={{ color: tintColor }} />
-        // ),
-      },
     },
   },
   {

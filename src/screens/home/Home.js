@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getActiveFast, getFasts } from 'common/state/selectors';
-import { beginFast, deleteFast, endFast } from 'common/state/fasts/fasts';
+import { beginFast, endFast } from 'common/state/fasts/fasts';
 import { ListView, Alert, Text } from 'react-native';
 import {
   Container,
@@ -18,31 +18,18 @@ import {
   Fab,
   List,
 } from 'native-base';
-import FastListItem from './FastListItem';
 import ActiveFastCard from './ActiveFastCard';
 
-class Main extends React.Component {
+class Home extends React.Component {
+  static navigationOptions = {
+    drawerLabel: 'Home',
+    drawerIcon: ({ tintColor }) => (
+      <Icon name="home" style={{ fontSize: 24, color: tintColor }} />
+    ),
+  };
+
   constructor(props) {
     super(props);
-
-    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.deleteRow = this.deleteRow.bind(this);
-    this.editRow = this.editRow.bind(this);
-  }
-
-  editRow(data) {
-    console.log('edit', data);
-  }
-
-  deleteRow(data) {
-    Alert.alert('Delete fast?', 'Do you want to delete this fast entry?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Ok',
-        onPress: () => this.props.actions.deleteFast(data.id),
-        style: 'destructive',
-      },
-    ]);
   }
 
   beginFast = () => {
@@ -53,10 +40,6 @@ class Main extends React.Component {
     this.props.actions.endFast();
   };
 
-  goToStats = () => {
-    this.props.navigation.navigate('Stats');
-  };
-
   render() {
     const { activeFast, fasts } = this.props;
     const fabAction =
@@ -65,15 +48,14 @@ class Main extends React.Component {
     const fabIconSet =
       activeFast && activeFast.start ? 'MaterialIcons' : 'MaterialIcons';
 
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-    });
-
     return (
       <Container>
         <Header>
           <Left>
-            <Button transparent>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.openDrawer()}
+            >
               <Icon name="menu" />
             </Button>
           </Left>
@@ -84,22 +66,6 @@ class Main extends React.Component {
         </Header>
         <View style={{ flex: 1 }} padder>
           <ActiveFastCard />
-          <List
-            leftOpenValue={75}
-            rightOpenValue={-75}
-            dataSource={ds.cloneWithRows(fasts)}
-            renderRow={data => <FastListItem fast={data} />}
-            renderLeftHiddenRow={data => (
-              <Button full onPress={() => this.editRow(data)}>
-                <Icon active name="edit" type="MaterialIcons" />
-              </Button>
-            )}
-            renderRightHiddenRow={data => (
-              <Button full danger onPress={() => this.deleteRow(data)}>
-                <Icon active name="trash" />
-              </Button>
-            )}
-          />
           <Fab
             direction="up"
             containerStyle={{}}
@@ -115,7 +81,7 @@ class Main extends React.Component {
   }
 }
 
-Main.propTypes = {
+Home.propTypes = {
   actions: PropTypes.object.isRequired,
   fasts: PropTypes.array.isRequired,
 };
@@ -129,11 +95,11 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ beginFast, deleteFast, endFast }, dispatch),
+    actions: bindActionCreators({ beginFast, endFast }, dispatch),
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Main);
+)(Home);

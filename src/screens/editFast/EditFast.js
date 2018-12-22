@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getFasts } from 'common/state/selectors';
-import StatsCard from './StatsCard';
 import {
   Container,
   Header,
@@ -14,14 +13,7 @@ import {
   Icon,
 } from 'native-base';
 
-class Stats extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Stats',
-    drawerIcon: ({ tintColor }) => (
-      <Icon name="stats" style={{ fontSize: 24, color: tintColor }} />
-    ),
-  };
-
+class EditFast extends React.Component {
   render() {
     const { fasts } = this.props;
     return (
@@ -36,12 +28,12 @@ class Stats extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>Stats</Title>
+            <Title>Edit</Title>
           </Body>
           <Right />
         </Header>
         <View style={{ flex: 1 }} padder>
-          <StatsCard />
+          <Text>Edit form</Text>
         </View>
       </Container>
     );
@@ -52,7 +44,7 @@ Stats.propTypes = {};
 
 function mapStateToProps(state, ownProps) {
   return {
-    fasts: getFasts(state),
+    //fast: getFast(state, ownProps.fastId),
   };
 }
 
@@ -66,4 +58,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Stats);
+)(EditFast);
