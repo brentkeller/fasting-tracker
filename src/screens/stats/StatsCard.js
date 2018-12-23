@@ -7,27 +7,38 @@ import { Text, Card, CardItem } from 'native-base';
 
 class ActiveFastCard extends React.Component {
   render() {
-    const { stats } = this.props;
-
+    const { showSummary, stats, navigation } = this.props;
     if (!stats) return null;
 
     return (
       <Card>
+        <CardItem header bordered>
+          <Text>Stats</Text>
+        </CardItem>
         <CardItem>
           <Text>Average fast: {getDurationString(stats.average)}</Text>
         </CardItem>
         <CardItem>
           <Text>Longest fast: {getDurationString(stats.longest)}</Text>
         </CardItem>
-        <CardItem>
-          <Text>Shortest fast: {getDurationString(stats.shortest)}</Text>
-        </CardItem>
+        {!showSummary && (
+          <CardItem>
+            <Text>Shortest fast: {getDurationString(stats.shortest)}</Text>
+          </CardItem>
+        )}
+        {showSummary && (
+          <CardItem footer button onPress={() => navigation.navigate('Stats')}>
+            <Text>See more stats</Text>
+          </CardItem>
+        )}
       </Card>
     );
   }
 }
 
 ActiveFastCard.propTypes = {
+  navigation: PropTypes.object,
+  showSummary: PropTypes.bool,
   stats: PropTypes.object,
 };
 

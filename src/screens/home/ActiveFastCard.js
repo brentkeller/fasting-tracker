@@ -16,7 +16,10 @@ const ActiveFast = ({ fast, endFast }) => (
       <Text>Duration: {getDurationFromNow(fast.start)}</Text>
     </CardItem>
     <CardItem>
-      <Button onPress={() => endFast()}>
+      <Button
+        onPress={() => endFast()}
+        style={{ justifyContent: 'center', width: '100%' }}
+      >
         <Text>End fast</Text>
       </Button>
     </CardItem>
@@ -26,7 +29,10 @@ const ActiveFast = ({ fast, endFast }) => (
 const BeginFast = ({ beginFast }) => (
   <Fragment>
     <CardItem>
-      <Button onPress={() => beginFast()}>
+      <Button
+        onPress={() => beginFast()}
+        style={{ justifyContent: 'center', width: '100%' }}
+      >
         <Text>Begin fast</Text>
       </Button>
     </CardItem>
@@ -46,8 +52,8 @@ class ActiveFastCard extends React.Component {
 
     return (
       <Card>
-        <CardItem>
-          <Text>Current Fast</Text>
+        <CardItem header bordered>
+          <Text>Current fast</Text>
         </CardItem>
         {cardBody}
       </Card>

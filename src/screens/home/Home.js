@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getActiveFast, getFasts } from 'common/state/selectors';
 import { beginFast, endFast } from 'common/state/fasts/fasts';
-import { ListView, Alert, Text } from 'react-native';
+import { ScrollView, ListView, Alert, Text } from 'react-native';
 import {
   Container,
   Header,
+  Content,
   Button,
   View,
   Left,
@@ -19,6 +20,8 @@ import {
   List,
 } from 'native-base';
 import ActiveFastCard from './ActiveFastCard';
+import FastSummaryCard from './FastSummaryCard';
+import StatsCard from 'screens/stats/StatsCard';
 
 class Home extends React.Component {
   static navigationOptions = {
@@ -41,7 +44,7 @@ class Home extends React.Component {
   };
 
   render() {
-    const { activeFast, fasts } = this.props;
+    const { activeFast, navigation } = this.props;
     const fabAction =
       activeFast && activeFast.start ? this.endFast : this.beginFast;
     const fabIcon = activeFast && activeFast.start ? 'stop' : 'add';
@@ -52,10 +55,7 @@ class Home extends React.Component {
       <Container>
         <Header>
           <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.openDrawer()}
-            >
+            <Button transparent onPress={() => navigation.openDrawer()}>
               <Icon name="menu" />
             </Button>
           </Left>
@@ -64,18 +64,20 @@ class Home extends React.Component {
           </Body>
           <Right />
         </Header>
-        <View style={{ flex: 1 }} padder>
+        <Content padder>
           <ActiveFastCard />
-          <Fab
-            direction="up"
-            containerStyle={{}}
-            style={{ backgroundColor: '#5067FF' }}
-            position="bottomRight"
-            onPress={fabAction}
-          >
-            <Icon name={fabIcon} type={fabIconSet} />
-          </Fab>
-        </View>
+          <FastSummaryCard navigation={navigation} />
+          <StatsCard showSummary={true} navigation={navigation} />
+        </Content>
+        <Fab
+          direction="up"
+          containerStyle={{}}
+          style={{ backgroundColor: '#5067FF' }}
+          position="bottomRight"
+          onPress={fabAction}
+        >
+          <Icon name={fabIcon} type={fabIconSet} />
+        </Fab>
       </Container>
     );
   }

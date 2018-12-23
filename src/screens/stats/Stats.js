@@ -5,7 +5,7 @@ import StatsCard from './StatsCard';
 import {
   Container,
   Header,
-  View,
+  Content,
   Left,
   Body,
   Right,
@@ -40,9 +40,9 @@ class Stats extends React.Component {
           </Body>
           <Right />
         </Header>
-        <View style={{ flex: 1 }} padder>
+        <Content>
           <StatsCard />
-        </View>
+        </Content>
       </Container>
     );
   }
