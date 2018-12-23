@@ -4,7 +4,7 @@ import { getFasts } from 'common/state/selectors';
 import {
   Container,
   Header,
-  View,
+  Content,
   Left,
   Body,
   Right,
@@ -32,9 +32,9 @@ class EditFast extends React.Component {
           </Body>
           <Right />
         </Header>
-        <View style={{ flex: 1 }} padder>
+        <Content>
           <Text>Edit form</Text>
-        </View>
+        </Content>
       </Container>
     );
   }
