@@ -24,7 +24,7 @@ export default function fasts(state = initialState, action) {
     case ADD_FAST: {
       const newState = cloneDeep(state);
       newState.byId[action.fast.id] = action.fast;
-      newState.allIds.push(action.fast.id);
+      newState.allIds.unshift(action.fast.id);
       if (!action.fast.end) newState.activeFastId = action.fast.id;
       return newState;
     }
