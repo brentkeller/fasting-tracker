@@ -10,7 +10,7 @@ const FastListItem = ({ fast }) => {
 
   const duration = getDurationString(fast.duration || 0);
   return (
-    <ListItem>
+    <ListItem style={{ paddingLeft: 18, paddingRight: 18 }}>
       <Left>
         <Text>{getDisplayValue(fast.start)}</Text>
       </Left>

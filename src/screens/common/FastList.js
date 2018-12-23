@@ -2,22 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getActiveFast, getFasts } from 'common/state/selectors';
-import { beginFast, deleteFast, endFast } from 'common/state/fasts/fasts';
-import { ListView, Alert, Text } from 'react-native';
-import {
-  Container,
-  Header,
-  Button,
-  View,
-  Left,
-  Body,
-  Right,
-  Title,
-  Icon,
-  Fab,
-  List,
-} from 'native-base';
+import { deleteFast } from 'common/state/fasts/fasts';
+import { ListView, Alert } from 'react-native';
+import { Button, Icon, List } from 'native-base';
 import FastListItem from '../common/FastListItem';
 
 class FastList extends React.Component {
@@ -77,15 +64,12 @@ FastList.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return {
-    activeFast: getActiveFast(state),
-    fasts: getFasts(state),
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ beginFast, deleteFast, endFast }, dispatch),
+    actions: bindActionCreators({ deleteFast }, dispatch),
   };
 }
 
