@@ -23,13 +23,18 @@ export const buildState = fasts => ({
   fasts,
 });
 
-export function getPopulatedFasts() {
+export function getPopulatedFasts(includeActiveFast = false) {
   const state = { ...initialState };
   const fast1 = createFast('abc', SAMPLE_START_STRING, SAMPLE_END_STRING);
-  const fast2 = createFast('def', '2018-11-02T20:00:00', '2018-11-03T12:00:00');
+  const fast2 = createFast('def', '2018-11-02T20:00:00', '2018-11-03T14:30:00');
   state.byId[fast1.id] = fast1;
   state.byId[fast2.id] = fast2;
   state.allIds = [fast1.id, fast2.id];
+  if (includeActiveFast) {
+    const active = createFast('ghi', '2018-11-03T20:00:00', null);
+    state.byId[active.id] = active;
+    state.allIds.push(active.id);
+  }
   return state;
 }
 
@@ -37,7 +42,7 @@ export function getEmptyState() {
   return buildState(initialState);
 }
 
-export function getSampleState() {
-  const fasts = getPopulatedFasts();
+export function getSampleState(includeActiveFast = false) {
+  const fasts = getPopulatedFasts(includeActiveFast);
   return buildState(fasts);
 }
