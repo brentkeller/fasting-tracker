@@ -1,5 +1,6 @@
 import * as selectors from './selectors';
 import * as helper from 'common/testHelper';
+import { initialState as settingsInitialState } from 'common/state/settings/settings';
 
 describe('getFasts', () => {
   test('returns empty array when there are no entries', () => {
@@ -43,5 +44,13 @@ describe('getActiveFast', () => {
     state.fasts.activeFastId = 'abc';
     const expected = state.fasts.byId['abc'];
     expect(selectors.getActiveFast(state)).toEqual(expected);
+  });
+});
+
+describe('getSettings', () => {
+  test('returns settings state', () => {
+    const state = helper.getSampleState();
+    const result = selectors.getSettings(state);
+    expect(result).toEqual(settingsInitialState);
   });
 });

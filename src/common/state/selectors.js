@@ -10,3 +10,5 @@ export const getActiveFast = state =>
     : null;
 
 export const getFastStats = state => state.fasts.stats;
+
+export const getSettings = state => state.settings;

@@ -1,5 +1,6 @@
 import { LocalDateTime, ZoneOffset } from 'js-joda';
 import { initialState } from './state/fasts/fasts';
+import { initialState as settingsState } from './state/settings/settings';
 import { calculateDuration } from 'common/date';
 
 export const SAMPLE_START_STRING = '2018-11-01T20:00:00';
@@ -21,6 +22,7 @@ export function createFast(id, start, end) {
 
 export const buildState = fasts => ({
   fasts,
+  settings: { ...settingsState },
 });
 
 export function getPopulatedFasts(includeActiveFast = false) {
