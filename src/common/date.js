@@ -1,6 +1,13 @@
 import { LocalDateTime, ZoneOffset, ChronoUnit } from 'js-joda';
 import dayjs from 'dayjs';
 
+export const dateFormats = [
+  'ddd MMM DD YYYY',
+  'D MMM YYY',
+  'MM/DD/YYYY',
+  'DD/MM/YYYY',
+];
+
 export function calculateDuration(start, end) {
   if (!start || !end) return 0;
   return start.until(end, ChronoUnit.MINUTES);

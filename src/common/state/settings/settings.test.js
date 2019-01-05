@@ -1,5 +1,9 @@
-import reducer, { initialState, SET_SETTING, setSetting } from './settings';
-import * as helper from 'common/testHelper';
+import reducer, {
+  initialState,
+  SET_SETTING,
+  setDateTimeFormat,
+  setSetting,
+} from './settings';
 
 function getState(state = initialState) {
   return { ...state };
@@ -11,6 +15,24 @@ describe('setSetting', () => {
     expect(action.type).toEqual(SET_SETTING);
     expect(action.name).toEqual('name');
     expect(action.value).toEqual('foo');
+  });
+});
+
+describe('setDateTimeFormat', () => {
+  test('sets dateTimeFormat using dateFormat', () => {
+    const state = getState();
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY hh:mm');
+    state.dateFormat = 'YYYY.MM.DD';
+    setDateTimeFormat(state);
+    expect(state.dateTimeFormat).toEqual('YYYY.MM.DD hh:mm');
+  });
+
+  test('sets dateTimeFormat using use24HrClock', () => {
+    const state = getState();
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY hh:mm');
+    state.use24HrClock = true;
+    setDateTimeFormat(state);
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY HH:mm');
   });
 });
 
