@@ -28,7 +28,7 @@ export function getDurationString(duration) {
   return `${mins}m`;
 }
 
-export function getDisplayValue(date, format = 'ddd MMM DD YYYY HH:mm') {
+export function getDisplayValue(date, format) {
   if (!date) return '';
   return dayjs.unix(date.toEpochSecond(ZoneOffset.UTC)).format(format);
 }

@@ -56,15 +56,13 @@ describe('getDisplayValue', () => {
     expect(date.getDisplayValue(null)).toEqual('');
   });
 
-  test('when no format provided should return string in default format', () => {
+  test('should return string in desired format', () => {
     const start = LocalDateTime.parse(startTime);
-    expect(date.getDisplayValue(start)).toEqual('Thu Nov 01 2018 04:00');
-  });
-
-  test('when format provided should return string in desired format', () => {
-    const start = LocalDateTime.parse(startTime);
-    expect(date.getDisplayValue(start, 'DD MMM YYYY hh:mm')).toEqual(
-      '01 Nov 2018 04:00',
+    expect(date.getDisplayValue(start, 'ddd MMM DD YYYY HH:mm')).toEqual(
+      'Thu Nov 01 2018 04:00',
+    );
+    expect(date.getDisplayValue(start, 'DD MMM YYYY h:mm a')).toEqual(
+      '01 Nov 2018 4:00 am',
     );
   });
 });
