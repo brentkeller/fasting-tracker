@@ -4,12 +4,12 @@ export const SET_SETTING = 'app/settings/SET_SETTING';
 
 export const initialState = {
   dateFormat: dateFormats[0],
-  dateTimeFormat: 'ddd MMM DD YYYY hh:mm',
+  dateTimeFormat: 'ddd MMM DD YYYY h:mm a',
   use24HrClock: false,
 };
 
 export function setDateTimeFormat(state) {
-  const timeFormat = state.use24HrClock ? 'HH:mm' : 'hh:mm';
+  const timeFormat = state.use24HrClock ? 'HH:mm' : 'h:mm a';
   state.dateTimeFormat = `${state.dateFormat} ${timeFormat}`;
 }
 

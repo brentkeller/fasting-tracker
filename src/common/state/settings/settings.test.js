@@ -21,15 +21,15 @@ describe('setSetting', () => {
 describe('setDateTimeFormat', () => {
   test('sets dateTimeFormat using dateFormat', () => {
     const state = getState();
-    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY hh:mm');
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY h:mm a');
     state.dateFormat = 'YYYY.MM.DD';
     setDateTimeFormat(state);
-    expect(state.dateTimeFormat).toEqual('YYYY.MM.DD hh:mm');
+    expect(state.dateTimeFormat).toEqual('YYYY.MM.DD h:mm a');
   });
 
   test('sets dateTimeFormat using use24HrClock', () => {
     const state = getState();
-    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY hh:mm');
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY h:mm a');
     state.use24HrClock = true;
     setDateTimeFormat(state);
     expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY HH:mm');
