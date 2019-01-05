@@ -32,12 +32,12 @@ class ActiveFastDetails extends React.Component {
   }
 
   render() {
-    const { fast, endFast } = this.props;
+    const { dateTimeFormat, fast, endFast } = this.props;
     const { duration } = this.state;
     return (
       <Fragment>
         <CardItem>
-          <Text>Began: {getDisplayValue(fast.start)}</Text>
+          <Text>Began: {getDisplayValue(fast.start, dateTimeFormat)}</Text>
         </CardItem>
         {duration && (
           <CardItem>
@@ -58,6 +58,7 @@ class ActiveFastDetails extends React.Component {
 }
 
 ActiveFastDetails.propTypes = {
+  dateTimeFormat: PropTypes.string.isRequired,
   endFast: PropTypes.func.isRequired,
   fast: PropTypes.object,
 };

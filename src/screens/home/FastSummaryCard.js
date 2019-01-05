@@ -31,6 +31,7 @@ class FastSummaryCard extends React.Component {
 }
 
 FastSummaryCard.propTypes = {
+  fasts: PropTypes.array,
   itemCount: PropTypes.number,
   navigation: PropTypes.object,
 };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteFast } from 'common/state/fasts/fasts';
+import { getSettings } from 'common/state/selectors';
 import { ListView, Alert } from 'react-native';
 import { Button, Icon, List } from 'native-base';
 import FastListItem from '../common/FastListItem';
@@ -32,7 +33,7 @@ class FastList extends React.Component {
   }
 
   render() {
-    const { fasts } = this.props;
+    const { fasts, settings } = this.props;
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
     });
@@ -42,7 +43,9 @@ class FastList extends React.Component {
         leftOpenValue={75}
         rightOpenValue={-75}
         dataSource={ds.cloneWithRows(fasts)}
-        renderRow={data => <FastListItem fast={data} />}
+        renderRow={data => (
+          <FastListItem fast={data} dateTimeFormat={settings.dateTimeFormat} />
+        )}
         renderLeftHiddenRow={data => (
           <Button full onPress={() => this.editRow(data)}>
             <Icon active name="edit" type="MaterialIcons" />
@@ -61,10 +64,13 @@ class FastList extends React.Component {
 FastList.propTypes = {
   actions: PropTypes.object.isRequired,
   fasts: PropTypes.array.isRequired,
+  settings: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
-  return {};
+  return {
+    settings: getSettings(state),
+  };
 }
 
 function mapDispatchToProps(dispatch) {
