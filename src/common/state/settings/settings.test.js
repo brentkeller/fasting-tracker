@@ -21,7 +21,7 @@ describe('setSetting', () => {
 describe('setDateTimeFormat', () => {
   test('sets dateTimeFormat using dateFormat', () => {
     const state = getState();
-    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY h:mm a');
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD, YYYY h:mm a');
     state.dateFormat = 'YYYY.MM.DD';
     setDateTimeFormat(state);
     expect(state.dateTimeFormat).toEqual('YYYY.MM.DD h:mm a');
@@ -29,10 +29,10 @@ describe('setDateTimeFormat', () => {
 
   test('sets dateTimeFormat using use24HrClock', () => {
     const state = getState();
-    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY h:mm a');
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD, YYYY h:mm a');
     state.use24HrClock = true;
     setDateTimeFormat(state);
-    expect(state.dateTimeFormat).toEqual('ddd MMM DD YYYY HH:mm');
+    expect(state.dateTimeFormat).toEqual('ddd MMM DD, YYYY HH:mm');
   });
 });
 
@@ -45,6 +45,16 @@ describe('settings reducer', () => {
       const state = getState();
       const result = reducer(state, action);
       expect(result[name]).toEqual(value);
+    });
+
+    test('update dateTimeFormat when clock type changes', () => {
+      const name = 'use24HrClock',
+        value = true;
+      const action = setSetting(name, value);
+      const state = getState();
+      expect(state.dateTimeFormat).toEqual('ddd MMM DD, YYYY h:mm a');
+      const result = reducer(state, action);
+      expect(result.dateTimeFormat).toEqual('ddd MMM DD, YYYY HH:mm');
     });
   });
   describe('Unknown action type', () => {

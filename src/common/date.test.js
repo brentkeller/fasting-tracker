@@ -66,3 +66,27 @@ describe('getDisplayValue', () => {
     );
   });
 });
+
+describe('getTimeFormat', () => {
+  test('should return 12hr format when use24HrClock is false', () => {
+    expect(date.getTimeFormat(false)).toEqual('h:mm a');
+  });
+
+  test('should return 24hr format when use24HrClock is true', () => {
+    expect(date.getTimeFormat(true)).toEqual('HH:mm');
+  });
+});
+
+describe('getDateTimeFormat', () => {
+  test('should return date format with 12hr format when use24HrClock is false', () => {
+    expect(date.getDateTimeFormat('YYYY.MM.DD', false)).toEqual(
+      'YYYY.MM.DD h:mm a',
+    );
+  });
+
+  test('should return date format with 24hr format when use24HrClock is true', () => {
+    expect(date.getDateTimeFormat('YYYY.MM.DD', true)).toEqual(
+      'YYYY.MM.DD HH:mm',
+    );
+  });
+});

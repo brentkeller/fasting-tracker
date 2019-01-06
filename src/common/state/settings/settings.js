@@ -1,16 +1,18 @@
-import { dateFormats } from 'common/date';
+import { dateFormats, getDateTimeFormat } from 'common/date';
 
 export const SET_SETTING = 'app/settings/SET_SETTING';
 
 export const initialState = {
   dateFormat: dateFormats[0],
-  dateTimeFormat: 'ddd MMM DD YYYY h:mm a',
+  dateTimeFormat: 'ddd MMM DD, YYYY h:mm a',
   use24HrClock: false,
 };
 
 export function setDateTimeFormat(state) {
-  const timeFormat = state.use24HrClock ? 'HH:mm' : 'h:mm a';
-  state.dateTimeFormat = `${state.dateFormat} ${timeFormat}`;
+  state.dateTimeFormat = getDateTimeFormat(
+    state.dateFormat,
+    state.use24HrClock,
+  );
 }
 
 export default function settings(state = initialState, action) {
