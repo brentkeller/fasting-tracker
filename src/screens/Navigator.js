@@ -1,6 +1,7 @@
 import Colors from 'res/colors';
 import Home from './home/Home';
 import History from './history/History';
+import Settings from './settings/Settings';
 import Stats from './stats/Stats';
 
 import { Platform, ScrollView, StatusBar, Text } from 'react-native';
@@ -66,6 +67,10 @@ const DrawerNavigator = createDrawerNavigator(
     Stats: {
       path: 'Stats',
       screen: Stats,
+    },
+    Settings: {
+      path: 'Settings',
+      screen: Settings,
     },
   },
   {
