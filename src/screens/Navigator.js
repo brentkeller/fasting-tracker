@@ -1,3 +1,4 @@
+import Colors from 'res/colors';
 import Home from './home/Home';
 import History from './history/History';
 import Stats from './stats/Stats';
@@ -70,7 +71,7 @@ const DrawerNavigator = createDrawerNavigator(
   {
     initialRouteName: 'Home',
     contentOptions: {
-      activeTintColor: '#339900',
+      activeTintColor: Colors.brand,
     },
   },
 );

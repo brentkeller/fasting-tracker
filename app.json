@@ -28,10 +28,10 @@
       "package": "com.brentkeller.fastingtracker",
       "permissions": []
     },
-    "androidStatusBarColor": "#334393",
+    "androidStatusBarColor": "#339900",
     "androidStatusBar": {
       "barStyle": "light-content",
-      "backgroundColor": "#334393"
+      "backgroundColor": "#339900"
     }    
   }
 }
