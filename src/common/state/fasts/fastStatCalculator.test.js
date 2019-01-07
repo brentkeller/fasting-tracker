@@ -17,12 +17,8 @@ describe('calculateStats', () => {
 
   describe('populated fasts', () => {
     beforeAll(() => {
-      state = helper.getSampleState();
+      state = helper.getSampleState(true);
       fasts = getFasts(state);
-      fasts[1] = {
-        ...fasts[1],
-        duration: 1920,
-      };
     });
     test('computes shortest fast', () => {
       const result = calculateStats(fasts);
@@ -31,12 +27,12 @@ describe('calculateStats', () => {
 
     test('computes longest fast', () => {
       const result = calculateStats(fasts);
-      expect(result.longest).toEqual(1920);
+      expect(result.longest).toEqual(1110);
     });
 
     test('computes average fast', () => {
       const result = calculateStats(fasts);
-      expect(result.average).toEqual(1440);
+      expect(result.average).toEqual(1035);
     });
   });
 });

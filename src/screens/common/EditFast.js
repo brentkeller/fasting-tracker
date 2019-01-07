@@ -54,7 +54,7 @@ const EditFast = ({ fast, onCancel, onSave }) => {
               </Button>
             </Left>
             <Right>
-              <Button transparent>
+              <Button transparent onPress={() => onSave(fast)}>
                 <Text>Save</Text>
               </Button>
             </Right>

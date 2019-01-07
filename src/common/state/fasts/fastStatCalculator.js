@@ -1,5 +1,3 @@
-import { getDurationString } from '../../date';
-
 const calculateStats = fasts => {
   const result = {
     shortest: null,
@@ -7,16 +5,18 @@ const calculateStats = fasts => {
     average: null,
   };
   let totalTime = 0,
-    fastLength = fasts.length;
-  for (let i = 0; i < fastLength; i++) {
-    const fast = fasts[i];
-    totalTime += fast.duration || 0;
-    if (result.shortest == null || fast.duration < result.shortest)
-      result.shortest = fast.duration;
-    if (result.longest == null || fast.duration > result.longest)
-      result.longest = fast.duration;
+    completedFasts = fasts.filter(f => (f.duration || 0) > 0);
+  const completedFastCount = completedFasts.length;
+  for (let i = 0; i < completedFastCount; i++) {
+    const fast = completedFasts[i],
+      duration = fast.duration;
+    totalTime += duration;
+    if (result.shortest == null || duration < result.shortest)
+      result.shortest = duration;
+    if (result.longest == null || duration > result.longest)
+      result.longest = duration;
   }
-  if (fastLength > 0) result.average = totalTime / fastLength;
+  if (completedFastCount > 0) result.average = totalTime / completedFastCount;
   return result;
 };
 
