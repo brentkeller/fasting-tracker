@@ -6,8 +6,8 @@ import { deleteFast } from 'common/state/fasts/fasts';
 import { getSettings } from 'common/state/selectors';
 import { ListView, Alert } from 'react-native';
 import { Button, Icon, List } from 'native-base';
-import FastListItem from '../common/FastListItem';
-import EditFast from './EditFast';
+import FastListItem from 'screens/common/FastListItem';
+import EditFast from 'screens/common/EditFast';
 
 class FastList extends React.Component {
   constructor(props) {
@@ -17,27 +17,44 @@ class FastList extends React.Component {
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
   }
 
-  editRow = data => {
-    this.setState({ editFast: { ...data } });
+  editRow = (data, secId, rowId, rowMap) => {
+    this.setState({
+      editFast: { ...data },
+      currentFastRow: {
+        secId,
+        rowId,
+        rowMap,
+      },
+    });
   };
 
-  deleteRow = data => {
+  closeCurrentRow = ({ secId, rowId, rowMap }) => {
+    if (secId && rowId && rowMap) rowMap[`${secId}${rowId}`].props.closeRow();
+  };
+
+  deleteRow = (data, secId, rowId, rowMap) => {
     Alert.alert('Delete fast?', 'Do you want to delete this fast entry?', [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Ok',
-        onPress: () => this.props.actions.deleteFast(data.id),
+        onPress: () => {
+          this.closeCurrentRow({ secId, rowId, rowMap });
+          this.props.actions.deleteFast(data.id);
+        },
         style: 'destructive',
       },
     ]);
   };
 
   cancelEdit = () => {
-    this.setState({ editFast: null });
+    this.closeCurrentRow(this.state.currentFastRow);
+    this.setState({ editFast: null, currentFastRow: null });
   };
 
   saveEdit = () => {
     console.log('saving', this.state.editFast);
+    this.closeCurrentRow(this.state.currentFastRow);
+    this.setState({ editFast: null, currentFastRow: null });
   };
 
   render() {
@@ -59,13 +76,20 @@ class FastList extends React.Component {
               dateTimeFormat={settings.dateTimeFormat}
             />
           )}
-          renderLeftHiddenRow={data => (
-            <Button full onPress={() => this.editRow(data)}>
+          renderLeftHiddenRow={(data, secId, rowId, rowMap) => (
+            <Button
+              full
+              onPress={() => this.editRow(data, secId, rowId, rowMap)}
+            >
               <Icon active name="edit" type="MaterialIcons" />
             </Button>
           )}
-          renderRightHiddenRow={data => (
-            <Button full danger onPress={() => this.deleteRow(data)}>
+          renderRightHiddenRow={(data, secId, rowId, rowMap) => (
+            <Button
+              full
+              danger
+              onPress={() => this.deleteRow(data, secId, rowId, rowMap)}
+            >
               <Icon active name="trash" />
             </Button>
           )}
