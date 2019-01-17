@@ -12,7 +12,6 @@ export const UPDATE_FAST = 'app/fasts/UPDATE_FAST';
 
 export const initialState = {
   activeFastId: null,
-  editFast: null,
   byId: {},
   allIds: [],
   stats: {},
