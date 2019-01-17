@@ -64,12 +64,14 @@ class FastListItem extends React.Component {
               <Text style={styles.detailsContent}>
                 {getDisplayValue(fast.end, dateTimeFormat)}
               </Text>
-              <Icon
-                name="edit"
-                type="MaterialIcons"
-                onPress={this.editEnd}
-                style={styles.editIcon}
-              />
+              {endDate && (
+                <Icon
+                  name="edit"
+                  type="MaterialIcons"
+                  onPress={this.editEnd}
+                  style={styles.editIcon}
+                />
+              )}
             </View>
           </View>
         )}
