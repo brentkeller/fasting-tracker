@@ -8,6 +8,7 @@ import calculateStats from './fastStatCalculator';
 export const ADD_FAST = 'app/fasts/ADD_FAST';
 export const END_FAST = 'app/fasts/END_FAST';
 export const DELETE_FAST = 'app/fasts/DELETE_FAST';
+export const UPDATE_FAST = 'app/fasts/UPDATE_FAST';
 
 export const initialState = {
   activeFastId: null,
@@ -52,6 +53,20 @@ export default function fasts(state = initialState, action) {
       return newState;
     }
 
+    case UPDATE_FAST: {
+      const { id, fieldName, value } = action;
+      if (!state.byId[action.id]) return state;
+      const newState = cloneDeep(state);
+      const fast = {
+        ...newState.byId[id],
+        [fieldName]: value,
+      };
+      fast.duration = calculateDuration(fast.start, fast.end);
+      newState.byId[fast.id] = fast;
+      newState.stats = calculateStats(getFasts(newState));
+      return newState;
+    }
+
     // For debugging redux-persist
     // case REHYDRATE: {
     //   console.log('REHYDRATE action', action);
@@ -80,6 +95,13 @@ export function beginFast() {
 export const endFast = () => ({ type: END_FAST });
 
 export const deleteFast = id => ({ type: DELETE_FAST, id });
+
+export const updateFast = (id, fieldName, value) => ({
+  type: UPDATE_FAST,
+  id,
+  fieldName,
+  value,
+});
 
 // Persistence helpers
 

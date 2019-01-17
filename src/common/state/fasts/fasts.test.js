@@ -3,10 +3,12 @@ import reducer, {
   ADD_FAST,
   END_FAST,
   DELETE_FAST,
+  UPDATE_FAST,
   addFast,
   beginFast,
   endFast,
   deleteFast,
+  updateFast,
   serializeFast,
   deserializeFast,
 } from './fasts';
@@ -46,6 +48,19 @@ describe('deleteFast', () => {
     const action = deleteFast(id);
     expect(action.type).toEqual(DELETE_FAST);
     expect(action.id).toEqual(id);
+  });
+});
+
+describe('updateFast', () => {
+  test('returns action of type UPDATE_FAST', () => {
+    const id = 'abc',
+      fieldName = 'start',
+      value = 'foo';
+    const action = updateFast(id, fieldName, value);
+    expect(action.type).toEqual(UPDATE_FAST);
+    expect(action.id).toEqual(id);
+    expect(action.fieldName).toEqual(fieldName);
+    expect(action.value).toEqual(value);
   });
 });
 
@@ -172,6 +187,23 @@ describe('fasts reducer', () => {
       const action = endFast();
       const result = reducer(state, action);
       expect(result.activeFastId).toBeNull();
+    });
+  });
+
+  describe('UPDATE_FAST', () => {
+    test('sets the value for the given field on the target fast', () => {
+      const state = helper.getPopulatedFasts();
+      const id = state.allIds[0];
+      expect(state.byId[id].start).not.toBeNull();
+      const action = updateFast(id, 'start', null);
+      const result = reducer(state, action);
+      expect(result.byId[id].start).toBeNull();
+    });
+    test('returns identical state when target fast not found', () => {
+      const state = helper.getPopulatedFasts();
+      const action = updateFast('000', 'start', null);
+      const result = reducer(state, action);
+      expect(result).toEqual(state);
     });
   });
 
