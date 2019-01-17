@@ -1,5 +1,5 @@
 import * as date from './date';
-import { LocalDateTime, ZoneOffset, ChronoUnit } from 'js-joda';
+import { LocalDateTime, ZoneOffset } from 'js-joda';
 
 const startTime = '2018-11-01T08:00:00';
 const endTime = '2018-11-01T09:10:00';
@@ -19,6 +19,14 @@ describe('calculateDuration', () => {
     const start = LocalDateTime.parse(startTime);
     const end = LocalDateTime.parse(endTime);
     expect(date.calculateDuration(start, end)).toEqual(70);
+  });
+});
+
+describe('fromDate', () => {
+  test('should return LocalDateTime instance', () => {
+    const result = date.fromDate(new Date(startTime));
+    // TODO: Find a way to test that's not susceptible to system's timezone
+    expect(result.toEpochSecond(ZoneOffset.UTC)).toEqual(1541073600);
   });
 });
 
@@ -58,6 +66,7 @@ describe('getDisplayValue', () => {
 
   test('should return string in desired format', () => {
     const start = LocalDateTime.parse(startTime);
+    // TODO: Find a way to test that's not susceptible to system's timezone
     expect(date.getDisplayValue(start, 'ddd MMM DD YYYY HH:mm')).toEqual(
       'Thu Nov 01 2018 04:00',
     );

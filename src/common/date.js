@@ -13,6 +13,9 @@ export function calculateDuration(start, end) {
   return start.until(end, ChronoUnit.MINUTES);
 }
 
+export const fromDate = date =>
+  LocalDateTime.parse(date.toISOString().substr(0, 19));
+
 export const getNow = () => LocalDateTime.now(ZoneOffset.UTC);
 
 export function getDurationFromNow(start) {

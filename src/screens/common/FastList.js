@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deleteFast } from 'common/state/fasts/fasts';
+import { deleteFast, updateFast } from 'common/state/fasts/fasts';
 import { getSettings } from 'common/state/selectors';
 import { ListView, Alert } from 'react-native';
 import { Button, Icon, List } from 'native-base';
@@ -58,7 +58,7 @@ class FastList extends React.Component {
   };
 
   render() {
-    const { fasts, settings } = this.props;
+    const { actions, fasts, settings } = this.props;
     const { editFast } = this.state;
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
@@ -74,6 +74,8 @@ class FastList extends React.Component {
             <FastListItem
               fast={data}
               dateTimeFormat={settings.dateTimeFormat}
+              updateFast={actions.updateFast}
+              use24HrClock={settings.use24HrClock}
             />
           )}
           renderLeftHiddenRow={(data, secId, rowId, rowMap) => (
@@ -120,7 +122,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ deleteFast }, dispatch),
+    actions: bindActionCreators({ deleteFast, updateFast }, dispatch),
   };
 }
 
