@@ -1,5 +1,5 @@
 export default (Colors = {
-  brand: '#339900',
+  brand: 'rgba(51,153,0,1)',
   black: '#000',
   white: '#fff',
 });

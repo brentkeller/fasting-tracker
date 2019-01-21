@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 //import { AsyncStorage } from 'react-native';
 import { Provider as StoreProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import { StyleProvider } from 'native-base';
+import getTheme from './native-base-theme/components';
+import commonColor from './native-base-theme/variables/commonColor';
 import { persistor, store } from './src/common/state/store';
 import AppShell from './src/screens/AppShell';
 
@@ -39,7 +42,9 @@ export default class App extends Component {
     return (
       <StoreProvider store={store}>
         <PersistGate persistor={persistor}>
-          <AppShell />
+          <StyleProvider style={getTheme(commonColor)}>
+            <AppShell />
+          </StyleProvider>
         </PersistGate>
       </StoreProvider>
     );
