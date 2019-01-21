@@ -1,23 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { getActiveFast, getFasts } from 'common/state/selectors';
-import { beginFast, endFast } from 'common/state/fasts/fasts';
-import { ScrollView, ListView, Alert, Text } from 'react-native';
+import { getFasts } from 'common/state/selectors';
 import {
   Container,
   Header,
   Content,
   Button,
-  View,
   Left,
   Body,
   Right,
   Title,
   Icon,
-  Fab,
-  List,
 } from 'native-base';
 import ActiveFastCard from './ActiveFastCard';
 import FastSummaryCard from './FastSummaryCard';
@@ -31,25 +25,8 @@ class Home extends React.Component {
     ),
   };
 
-  constructor(props) {
-    super(props);
-  }
-
-  beginFast = () => {
-    this.props.actions.beginFast();
-  };
-
-  endFast = () => {
-    this.props.actions.endFast();
-  };
-
   render() {
-    const { activeFast, navigation } = this.props;
-    const fabAction =
-      activeFast && activeFast.start ? this.endFast : this.beginFast;
-    const fabIcon = activeFast && activeFast.start ? 'stop' : 'add';
-    const fabIconSet =
-      activeFast && activeFast.start ? 'MaterialIcons' : 'MaterialIcons';
+    const { navigation } = this.props;
 
     return (
       <Container>
@@ -69,39 +46,19 @@ class Home extends React.Component {
           <FastSummaryCard navigation={navigation} />
           <StatsCard showSummary={true} navigation={navigation} />
         </Content>
-        <Fab
-          direction="up"
-          containerStyle={{}}
-          style={{ backgroundColor: '#5067FF' }}
-          position="bottomRight"
-          onPress={fabAction}
-        >
-          <Icon name={fabIcon} type={fabIconSet} />
-        </Fab>
       </Container>
     );
   }
 }
 
 Home.propTypes = {
-  actions: PropTypes.object.isRequired,
   fasts: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    activeFast: getActiveFast(state),
     fasts: getFasts(state),
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ beginFast, endFast }, dispatch),
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Home);
+export default connect(mapStateToProps)(Home);
