@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getFasts } from 'common/state/selectors';
+import Styles from 'screens/common/styles';
 import StatsCard from './StatsCard';
 import {
   Container,
@@ -40,7 +41,7 @@ class Stats extends React.Component {
           </Body>
           <Right />
         </Header>
-        <Content>
+        <Content padder style={Styles.pageContainer}>
           <StatsCard />
         </Content>
       </Container>

@@ -13,6 +13,7 @@ import {
   Title,
   Icon,
 } from 'native-base';
+import Styles from 'screens/common/styles';
 import ActiveFastCard from './ActiveFastCard';
 import FastSummaryCard from './FastSummaryCard';
 import StatsCard from 'screens/stats/StatsCard';
@@ -41,7 +42,7 @@ class Home extends React.Component {
           </Body>
           <Right />
         </Header>
-        <Content padder>
+        <Content padder style={Styles.pageContainer}>
           <ActiveFastCard />
           <FastSummaryCard navigation={navigation} />
           <StatsCard showSummary={true} navigation={navigation} />

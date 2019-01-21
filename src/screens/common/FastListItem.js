@@ -4,6 +4,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { Left, ListItem, Right, Button, Icon } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { fromDate, getDisplayValue, getDurationString } from 'common/date';
+import Colors from 'res/colors';
 
 class FastListItem extends React.Component {
   state = {
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     top: 14,
   },
   details: {
-    backgroundColor: '#eee',
+    backgroundColor: Colors.grey95,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     borderTopColor: '#ddd',
