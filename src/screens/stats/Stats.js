@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { getFasts } from 'common/state/selectors';
 import Styles from 'screens/common/styles';
 import StatsCard from './StatsCard';
 import {
@@ -9,22 +7,13 @@ import {
   Content,
   Left,
   Body,
-  Right,
   Title,
   Button,
   Icon,
 } from 'native-base';
 
 class Stats extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Stats',
-    drawerIcon: ({ tintColor }) => (
-      <Icon name="stats" style={{ fontSize: 24, color: tintColor }} />
-    ),
-  };
-
   render() {
-    const { fasts } = this.props;
     return (
       <Container>
         <Header>
@@ -39,7 +28,6 @@ class Stats extends React.Component {
           <Body>
             <Title>Stats</Title>
           </Body>
-          <Right />
         </Header>
         <Content padder style={Styles.pageContainer}>
           <StatsCard />
@@ -51,20 +39,4 @@ class Stats extends React.Component {
 
 Stats.propTypes = {};
 
-function mapStateToProps(state, ownProps) {
-  return {
-    fasts: getFasts(state),
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {};
-  // return {
-  //   actions: bindActionCreators({ beginFast, deleteFast, endFast }, dispatch),
-  // };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Stats);
+export default Stats;

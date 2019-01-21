@@ -3,42 +3,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getFastStats } from 'common/state/selectors';
 import { getDurationString } from 'common/date';
-import { Text, Card, CardItem } from 'native-base';
+import { Text, Card, CardItem, View } from 'native-base';
+import Styles from 'screens/common/styles';
 
 class ActiveFastCard extends React.Component {
   render() {
-    const { showSummary, stats, navigation } = this.props;
+    const { stats } = this.props;
     if (!stats) return null;
 
     return (
       <Card>
-        <CardItem header bordered>
+        <CardItem bordered header>
           <Text>Stats</Text>
         </CardItem>
-        <CardItem>
-          <Text>Average fast: {getDurationString(stats.average)}</Text>
+        <CardItem style={{ justifyContent: 'space-between' }}>
+          <View style={Styles.statCardItem}>
+            <Text>{getDurationString(stats.average)}</Text>
+            <Text style={Styles.statCardItemLabel}>Average</Text>
+          </View>
+          <View style={Styles.statCardItem}>
+            <Text>{getDurationString(stats.longest)}</Text>
+            <Text style={Styles.statCardItemLabel2}>Longest</Text>
+          </View>
+          <View style={Styles.statCardItem}>
+            <Text>{getDurationString(stats.shortest)}</Text>
+            <Text>Shortest</Text>
+          </View>
         </CardItem>
-        <CardItem>
-          <Text>Longest fast: {getDurationString(stats.longest)}</Text>
-        </CardItem>
-        {!showSummary && (
-          <CardItem>
-            <Text>Shortest fast: {getDurationString(stats.shortest)}</Text>
-          </CardItem>
-        )}
-        {showSummary && (
-          <CardItem footer button onPress={() => navigation.navigate('Stats')}>
-            <Text>See more stats</Text>
-          </CardItem>
-        )}
       </Card>
     );
   }
 }
 
 ActiveFastCard.propTypes = {
-  navigation: PropTypes.object,
-  showSummary: PropTypes.bool,
   stats: PropTypes.object,
 };
 
