@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getFasts } from 'common/state/selectors';
-import { Text, Card, CardItem } from 'native-base';
+import { Text, Card, CardItem, Icon, Right } from 'native-base';
 import FastList from 'screens/common/FastList';
 
 class FastSummaryCard extends React.Component {
@@ -16,14 +16,19 @@ class FastSummaryCard extends React.Component {
 
     return (
       <Card>
-        <CardItem header bordered>
-          <Text>Recent fasts</Text>
+        <CardItem
+          header
+          bordered
+          button
+          onPress={() => navigation.navigate('History')}
+        >
+          <Text>History</Text>
+          <Right style={{ right: 18, position: 'absolute' }}>
+            <Icon name="right" type="AntDesign" />
+          </Right>
         </CardItem>
         <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
           <FastList fasts={recentFasts} />
-        </CardItem>
-        <CardItem footer button onPress={() => navigation.navigate('History')}>
-          <Text>See all fasts</Text>
         </CardItem>
       </Card>
     );
