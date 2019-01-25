@@ -11,6 +11,9 @@ import {
 import { setSetting } from 'common/state/settings/settings';
 import { getSettings } from 'common/state/selectors';
 import Styles from 'screens/common/styles';
+import Colors from 'res/colors';
+import SettingsHeader from 'screens/settings/SettingsHeader';
+import CheckboxSetting from 'screens/settings/CheckboxSetting';
 import { Switch, Text } from 'react-native';
 import {
   Container,
@@ -36,6 +39,8 @@ class Settings extends React.Component {
       <Icon name="settings" style={{ fontSize: 24, color: tintColor }} />
     ),
   };
+
+  setSetting = (fieldName, e) => this.props.actions.setSetting(fieldName, e);
 
   onDateFormatChanged = e => this.props.actions.setSetting('dateFormat', e);
   onTimeFormatChanged = e => this.props.actions.setSetting('use24HrClock', e);
@@ -71,17 +76,15 @@ class Settings extends React.Component {
           </Body>
           <Right />
         </Header>
-        <Content padder>
-          <Form>
-            <H2>Date and Time Formats</H2>
-            <Item fixedLabel picker>
-              <Label>Use 24 hour clock</Label>
-              <Switch
-                style={Styles.switch}
-                value={settings.use24HrClock}
-                onValueChange={this.onTimeFormatChanged}
-              />
-            </Item>
+        <Content>
+          <SettingsHeader text="Display" />
+          <CheckboxSetting
+            color={Colors.brand}
+            label="Use 24 hour clock"
+            fieldName="use24HrClock"
+            onValueChange={this.setSetting}
+            value={settings.use24HrClock}
+          />
             <Item picker>
               <Label>Date display</Label>
               <Picker
