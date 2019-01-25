@@ -23,11 +23,11 @@ class ActiveFastCard extends React.Component {
           </View>
           <View style={Styles.statCardItem}>
             <Text>{getDurationString(stats.longest)}</Text>
-            <Text style={Styles.statCardItemLabel2}>Longest</Text>
+            <Text style={Styles.statCardItemLabel}>Longest</Text>
           </View>
           <View style={Styles.statCardItem}>
             <Text>{getDurationString(stats.shortest)}</Text>
-            <Text>Shortest</Text>
+            <Text style={Styles.statCardItemLabel}>Shortest</Text>
           </View>
         </CardItem>
       </Card>
