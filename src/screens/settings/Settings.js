@@ -2,34 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  dateFormats,
-  getDateTimeFormat,
-  getDisplayValue,
-  getNow,
-} from 'common/date';
+import { dateFormats, getDisplayValue, getNow } from 'common/date';
 import { setSetting } from 'common/state/settings/settings';
 import { getSettings } from 'common/state/selectors';
 import Styles from 'screens/common/styles';
 import Colors from 'res/colors';
 import SettingsHeader from 'screens/settings/SettingsHeader';
 import CheckboxSetting from 'screens/settings/CheckboxSetting';
-import { Switch, Text } from 'react-native';
+import ModalOptionSetting from 'screens/settings/ModalOptionSetting';
 import {
   Container,
   Header,
   Content,
   Left,
   Body,
-  Right,
   Title,
   Button,
   Icon,
-  Form,
-  Item,
-  Label,
-  Picker,
-  H2,
 } from 'native-base';
 
 class Settings extends React.Component {
@@ -45,20 +34,21 @@ class Settings extends React.Component {
   onDateFormatChanged = e => this.props.actions.setSetting('dateFormat', e);
   onTimeFormatChanged = e => this.props.actions.setSetting('use24HrClock', e);
 
-  getDateFormats = () => {
+  getDateFormatOptions = () => {
     const now = getNow();
-    let formats = [];
+    let options = [];
     dateFormats.forEach(f => {
-      const format = getDateTimeFormat(f, this.props.settings.use24HrClock);
-      const label = getDisplayValue(now, format);
-      formats.push(<Picker.Item label={label} value={f} key={f} />);
+      options.push({
+        label: getDisplayValue(now, f),
+        value: f,
+      });
     });
-    return formats;
+    return options;
   };
 
   render() {
     const { settings } = this.props;
-    const liveDateFormats = this.getDateFormats();
+    const dateFormatOptions = this.getDateFormatOptions();
 
     return (
       <Container>
@@ -74,7 +64,6 @@ class Settings extends React.Component {
           <Body>
             <Title>Settings</Title>
           </Body>
-          <Right />
         </Header>
         <Content>
           <SettingsHeader text="Display" />
@@ -85,16 +74,14 @@ class Settings extends React.Component {
             onValueChange={this.setSetting}
             value={settings.use24HrClock}
           />
-            <Item picker>
-              <Label>Date display</Label>
-              <Picker
-                selectedValue={settings.dateFormat}
-                onValueChange={this.onDateFormatChanged}
-              >
-                {liveDateFormats}
-              </Picker>
-            </Item>
-          </Form>
+          <ModalOptionSetting
+            color={Colors.brand}
+            label="Date format"
+            fieldName="dateFormat"
+            onValueChange={this.setSetting}
+            options={dateFormatOptions}
+            value={settings.dateFormat}
+          />
         </Content>
       </Container>
     );

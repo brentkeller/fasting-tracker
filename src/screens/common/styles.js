@@ -52,4 +52,38 @@ export default StyleSheet.create({
     alignSelf: 'flex-end',
     marginRight: 6,
   },
+  // Radio item
+  radioListOption: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  radioListButton: { marginRight: 24 },
+  radioListLabel: {},
+  // Modal
+  modalBackground: {
+    backgroundColor: Colors.modalBackground,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalCard: {
+    backgroundColor: Colors.white,
+    padding: 24,
+  },
+  modalTitle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginBottom: 12,
+  },
+  modalFooter: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 12,
+  },
+  modalButton: {
+    color: Colors.brand,
+  },
 });

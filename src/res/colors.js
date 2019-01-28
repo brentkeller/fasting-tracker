@@ -6,4 +6,5 @@ export default (Colors = {
   grey45: 'hsl(0, 0%, 45%)',
   grey65: 'hsl(0, 0%, 65%)',
   grey95: 'hsl(0, 0%, 95%)',
+  modalBackground: 'hsla(0, 0%, 5%, 0.4)',
 });
