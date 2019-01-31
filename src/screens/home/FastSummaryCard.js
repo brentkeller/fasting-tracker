@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getFasts } from 'common/state/selectors';
+import { getCompletedFasts } from 'common/state/selectors';
 import { Text, Card, CardItem, Icon, Right } from 'native-base';
 import FastList from 'screens/common/FastList';
 
@@ -43,7 +43,7 @@ FastSummaryCard.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    fasts: getFasts(state),
+    fasts: getCompletedFasts(state),
   };
 }
 

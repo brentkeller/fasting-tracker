@@ -14,6 +14,22 @@ describe('getFasts', () => {
   });
 });
 
+describe('getCompletedFasts', () => {
+  test('returns empty array when there are no entries', () => {
+    const state = helper.getEmptyState();
+    expect(selectors.getCompletedFasts(state)).toHaveLength(0);
+  });
+
+  test('returns array of completed fasts', () => {
+    const state = helper.getSampleState(true);
+    expect(state.fasts.allIds).toHaveLength(3);
+    const result = selectors.getCompletedFasts(state);
+    expect(result).toHaveLength(2);
+    const incompleteFasts = result.filter(f => !f.end);
+    expect(incompleteFasts).toHaveLength(0);
+  });
+});
+
 describe('getFast', () => {
   test('returns null when fast not found', () => {
     const state = helper.getSampleState();

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getFasts } from 'common/state/selectors';
+import { getCompletedFasts } from 'common/state/selectors';
 import {
   Container,
   Header,
@@ -57,7 +57,7 @@ History.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    fasts: getFasts(state),
+    fasts: getCompletedFasts(state),
   };
 }
 
