@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { beginFast, endFast } from 'common/state/fasts/fasts';
+import { beginFast, endFast, updateFast } from 'common/state/fasts/fasts';
 import { getActiveFast, getSettings } from 'common/state/selectors';
 import { Button, Text, Card, CardItem } from 'native-base';
 import ActiveFastDetails from './ActiveFastDetails';
@@ -31,6 +31,8 @@ class ActiveFastCard extends React.Component {
           fast={activeFast}
           endFast={actions.endFast}
           dateTimeFormat={settings.dateTimeFormat}
+          use24HrClock={settings.use24HrClock}
+          updateFast={actions.updateFast}
         />
       );
 
@@ -60,7 +62,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ beginFast, endFast }, dispatch),
+    actions: bindActionCreators({ beginFast, endFast, updateFast }, dispatch),
   };
 }
 

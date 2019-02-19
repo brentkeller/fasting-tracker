@@ -23,6 +23,10 @@ export default StyleSheet.create({
   switch: {
     alignSelf: 'flex-end',
   },
+  touchableText: {
+    color: Colors.brand,
+    fontWeight: 'bold',
+  },
   //Settings
   settingsHeader: {
     color: Colors.brand,

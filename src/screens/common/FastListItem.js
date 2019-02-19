@@ -5,6 +5,7 @@ import { Left, ListItem, Right } from 'native-base';
 import { getDisplayValue, getDurationString } from 'common/date';
 import Colors from 'res/colors';
 import EditableDate from './EditableDate';
+import Styles from 'screens/common/styles';
 
 class FastListItem extends React.Component {
   state = {
@@ -35,7 +36,7 @@ class FastListItem extends React.Component {
                 dateTimeFormat={dateTimeFormat}
                 fast={fast}
                 fieldName="start"
-                textStyle={styles.timeLabel}
+                textStyle={Styles.touchableText}
                 use24HrClock={use24HrClock}
                 updateFast={updateFast}
               />
@@ -46,7 +47,7 @@ class FastListItem extends React.Component {
                 dateTimeFormat={dateTimeFormat}
                 fast={fast}
                 fieldName="end"
-                textStyle={styles.timeLabel}
+                textStyle={Styles.touchableText}
                 use24HrClock={use24HrClock}
                 updateFast={updateFast}
               />
@@ -102,10 +103,6 @@ const styles = StyleSheet.create({
   },
   detailsLabel: {
     width: 65,
-  },
-  timeLabel: {
-    color: Colors.brand,
-    fontWeight: 'bold',
   },
 });
 
