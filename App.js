@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 //import { AsyncStorage } from 'react-native';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 import { Provider as StoreProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { StyleProvider } from 'native-base';
@@ -29,7 +31,7 @@ export default class App extends Component {
   }
 
   async componentWillMount() {
-    await Expo.Font.loadAsync({
+    await Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
     });
@@ -37,7 +39,7 @@ export default class App extends Component {
   }
 
   render() {
-    if (!this.state.isReady) return <Expo.AppLoading />;
+    if (!this.state.isReady) return <AppLoading />;
 
     return (
       <StoreProvider store={store}>
