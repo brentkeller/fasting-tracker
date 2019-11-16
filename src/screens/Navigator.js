@@ -3,7 +3,8 @@ import Home from './home/Home';
 import History from './history/History';
 import Settings from './settings/Settings';
 import Stats from './stats/Stats';
-import { createAppContainer, createDrawerNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 
 const DrawerNavigator = createDrawerNavigator(
   {
