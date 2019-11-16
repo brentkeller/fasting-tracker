@@ -4,16 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteFast, updateFast } from 'common/state/fasts/fasts';
 import { getSettings } from 'common/state/selectors';
-import { ListView, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { Button, Icon, List } from 'native-base';
 import FastListItem from 'screens/common/FastListItem';
 
 class FastList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-  }
-
   closeCurrentRow = ({ secId, rowId, rowMap }) => {
     if (secId && rowId && rowMap) rowMap[`${secId}${rowId}`].props.closeRow();
   };
@@ -34,14 +29,12 @@ class FastList extends React.Component {
 
   render() {
     const { actions, fasts, settings } = this.props;
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-    });
 
     return (
       <List
+        keyExtractor={(item, _idx) => item.id.toString()}
+        dataArray={fasts}
         rightOpenValue={-75}
-        dataSource={ds.cloneWithRows(fasts)}
         renderRow={data => (
           <FastListItem
             fast={data}
@@ -82,7 +75,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(FastList);
+export default connect(mapStateToProps, mapDispatchToProps)(FastList);
